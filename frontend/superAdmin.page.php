@@ -4,6 +4,7 @@ if (!isset($_SESSION['User'])) {
     header("location:login.page.php");
 } else {
     $user = $_SESSION['User'];
+    $role = $user->status == 9 ? 'SuperAdmin' : ($user->status == 5 ? 'Admin' : 'user');
     $status = $user->status;
 }
 ?>
@@ -75,13 +76,16 @@ if (!isset($_SESSION['User'])) {
         </div>
         <div class="col-10 navv pe-4 text-dark py-3">
             <div class="d-flex justify-content-between">
-                <div class=""></div>
+                <div class="">
+                    ตำแหน่ง : <?php echo $role; ?>
+                </div>
                 <div class="me-3 d-flex ">
                     <span class="ms-3 me-4">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?php echo $user->firstname ?>
                         </a>
                         <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="profile.php">Profile</a></li>
                             <li><a class="dropdown-item" href="logout.page.php">Logout</a></li>
                         </ul>
                     </span>
