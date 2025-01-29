@@ -1,4 +1,6 @@
 <?php  
+    session_start();
+    $user = $_SESSION['User'];
     include("../include/connect.inc.php");
     $sqlCompany = "SELECT * FROM company";
     $qCompany = $conn->query($sqlCompany);
@@ -28,9 +30,15 @@
 <label class="form-label">สถานะ</label>
 <select class="form-select form-select-lg" id="statusId">
     <option selected>โปรดเลือก</option>
-<?php while($dataStatus = $qStatus->fetch_object()){ ?>
+<?php while($dataStatus = $qStatus->fetch_object()){ 
+    if($dataStatus->statusId != 9){?>
         <option value="<?php echo $dataStatus->statusId ?>"><?php echo $dataStatus->statusName ?></option>
 <?php 
+}else{
+    if($user->status == 9){?>
+        <option value="<?php echo $dataStatus->statusId ?>"><?php echo $dataStatus->statusName ?></option>
+  <?php  }
+}
 } ?>
 </select>
 
