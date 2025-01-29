@@ -65,7 +65,7 @@
                     <input type="email" class="form-control my-4" placeholder="Email" id="email">
                     <input type="password" class="form-control my-4" placeholder="password" id="password">
                     <button class="button form-control " onclick=login()>Login</button>
-                    <div class="d-flex justify-content-center mt-3">
+                    <!-- <div class="d-flex justify-content-center mt-3">
                         <div id="g_id_onload"
                             data-client_id="90310662516-8bc5o6v9casg97imrd8aoi99pnmbvutm.apps.googleusercontent.com"
                             data-context="signin"
@@ -82,7 +82,7 @@
                             data-size="large"
                             data-locale="en-GB">
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
     </div>
