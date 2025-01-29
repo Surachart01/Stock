@@ -43,6 +43,83 @@ if ($page == "home") {
                 </div>
             </div>
 
+            <div class="col-12">
+                <div class="card shadow cardColor text-light" style="background-color: #ffffff;">
+                    <div class="card-body">
+                        <input type="month" class="form-control" id="month">
+                        <canvas id="barChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- โหลด jQuery และ Chart.js -->
+            <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+
+
+            <script>
+                var barChart = null; // ประกาศตัวแปร Global
+                $(document).ready(function() {
+                    let today = new Date();
+                    let year = today.getFullYear();
+                    let month = String(today.getMonth() + 1).padStart(2, '0');
+                    let defaultMonth = `${year}-${month}`;
+                    $('#month').val(defaultMonth);
+                    loadChartData(defaultMonth)
+
+                });
+
+                $(document).on("input", "#month", function() {
+                    var ctx = document.getElementById('barChart').getContext('2d');
+                    let month = $('#month').val();
+                    loadChartData(month)
+                });
+
+                function loadChartData(selectedMonth) {
+                    $.ajax({
+                        url: "../backend/searchChart.php",
+                        type: "POST",
+                        data: {
+                            month: selectedMonth
+                        },
+                        dataType: "json",
+                        success: function(res) {
+                            console.log("Data received:", res);
+                            if (!res || !res.dataLabels || !res.up || !res.down) return;
+
+                            if (barChart) barChart.destroy();
+
+                            barChart = new Chart(document.getElementById('barChart').getContext('2d'), {
+                                type: 'bar',
+                                data: {
+                                    labels: res.dataLabels,
+                                    datasets: [{
+                                            label: 'สินค้าเข้า',
+                                            data: res.up,
+                                            backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                                        },
+                                        {
+                                            label: 'สินค้าออก',
+                                            data: res.down,
+                                            backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                                        }
+                                    ]
+                                },
+                                options: {
+                                    responsive: true,
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            </script>
+
+
         </div>
 
     </div>

@@ -5,7 +5,7 @@
 
     $companyId = $_POST['companyId'];
 
-    $sql = "SELECT * FROM member WHERE companyId='$companyId'";
+    $sql = "SELECT * FROM member WHERE companyId='$companyId' AND status != 9";
     $qSql = $conn->query($sql);
 ?>
 <div class="row">

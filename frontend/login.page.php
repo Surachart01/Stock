@@ -118,7 +118,6 @@
                 success: function(data) {
                     if (data == 9 || data == 5 || data == 1) {
                         Swal.fire({
-                            position: "top-end",
                             icon: "success",
                             timer: 800,
                             showConfirmButton: false,
@@ -128,7 +127,6 @@
                         });
                     } else {
                         Swal.fire({
-                            position: "top-end",
                             icon: "error",
                             timer: 800,
                             showConfirmButton: false,
@@ -155,7 +153,6 @@
                 success: function(data) {
                     if (data == 9) {
                         Swal.fire({
-                            position: "top-end",
                             icon: "success",
                             timer: 800,
                             showConfirmButton: false,
@@ -165,7 +162,6 @@
                         });
                     } else {
                         Swal.fire({
-                            position: "top-end",
                             icon: "error",
                             timer: 800,
                             showConfirmButton: false,
