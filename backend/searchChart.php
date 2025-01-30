@@ -22,7 +22,15 @@ while ($item = $qCheck->fetch_object()) {
     $up[] = (int) $item->qtyIn;
     $down[] = (int) $item->qtyOut;
 }
+$sqlBranch = "SELECT * FROM company ";
+$qBranch = $conn->query($sqlBranch);
+$rBranch = $qBranch->num_rows;
+
+$sqlEmp = "SELECT * FROM member WHERE status != '9'";
+$qEmp = $conn->query($sqlEmp);
+$rEmp = $qEmp->num_rows;
+
 
 header('Content-Type: application/json'); // บอกให้ JS ทราบว่าเป็น JSON
-echo json_encode(['dataLabels' => $labels, 'up' => $up, 'down' => $down]);
+echo json_encode(['dataLabels' => $labels, 'up' => $up, 'down' => $down,'branch' => "$rBranch",'empAll' => "$rEmp"]);
 ?>
