@@ -22,7 +22,7 @@ if ($page == "home") {
             $qtyDown += $dataLog->qty;
         }
     } ?>
-    <div class="container mt-4">
+    <div class="container">
         <div class="row">
             <div class="col-12">
                 <div class="row px-3">
@@ -74,8 +74,8 @@ if ($page == "home") {
 
             <div class="col-12">
                 <div class="card shadow cardColor text-light" style="background-color: #ffffff;">
-                    <div class="card-body">
-                        <canvas id="barChart"></canvas>
+                    <div class="card-body" style="max-height: 500px;">
+                        <canvas id="barChart" style="max-height: 95%;"></canvas>
                     </div>
                 </div>
             </div>
