@@ -1,5 +1,5 @@
 <?php
-    $hostname = "127.0.0.1:3307";
+    $hostname = "127.0.0.1:3306";
     $username = "root";
     $password = "";
     $dbname = "stockmicro";

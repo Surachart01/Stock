@@ -1,9 +1,9 @@
 <?php
 include("../include/connect.inc.php");
 session_start();
-if(isset($_POST['companyId'])){
+if (isset($_POST['companyId'])) {
     $companyId = $_POST['companyId'];
-}else{
+} else {
     $companyId = $_SESSION['User']->companyId;
 }
 $companyId = $_POST['companyId'];
@@ -27,18 +27,16 @@ $sDate = $date . "%";
                     <th scope="col">#</th>
                     <th scope="col">ชื่อสินค้า</th>
                     <th scope="col">วันที่</th>
-                    <th scope="col">เวลา</th>
-                    <th scope="col">จำนวน</th>
+                    <th scope="col">พนักงาน</th>
                     <th scope="col">สถานะ</th>
-
+                    <th scope="col">จำนวน</th>
+                    <th scope="col">จำนวนสินค้าคงเหลือ</th>
+                    
                 </tr>
             </thead>
             <tbody>
     </div>
 </div>
-
-
-
 
 <?php
 $sqlSel = "SELECT * FROM log WHERE date LIKE '$sDate' AND companyId='$companyId'";
@@ -48,25 +46,31 @@ while ($data = $qSel->fetch_object()) {
     $sqlPro = "SELECT * FROM product WHERE id='$data->productId'";
     $qPro = $conn->query($sqlPro);
     $dataPro = $qPro->fetch_object();
+    $sqlUser = "SELECT * FROM member WHERE memId = '$data->userId'";
+    $qUser = $conn->query($sqlUser);
+    $dataUser = $qUser->fetch_object();
 ?>
 
     <tr>
-        <td scope="row"><?php echo $i ?></td>
+        <td scope="row"><?php echo $i; ?></td>
         <td><?php echo $dataPro->productName; ?></td>
         <td><?php echo $data->date; ?></td>
-        <td><?php echo $data->time; ?></td>
-        <td><?php echo $data->qty; ?></td>
+        <td><?php echo $dataUser->firstname; ?></td>
         <td>
-            <?php 
+            <?php
             if ($data->status == 'up') {
-                echo '<span style="color: green; font-size: 2em;">↑</span>';
+                echo '<span style="color: green; font-size: 1em;">เพิ่มสินค้า</span>';
             } elseif ($data->status == 'down') {
-                echo '<span style="color: red; font-size: 2em;">↓</span>';
+                echo '<span style="color: red; font-size: 1em;">ขายสินค้า</span>';
             } else {
                 echo $data->status;
             }
             ?>
-        </td></td>
+        </td>
+        <td><?php echo $data->qty; ?> ชิ้น</td>
+        <td><?php echo $data->stockTotal; ?> ชิ้น</td>
+        
+        
     </tr>
 <?php
     $i++;

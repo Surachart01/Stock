@@ -12,7 +12,7 @@
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 </head>
@@ -20,21 +20,51 @@
     * {
         font-family: 'Kanit', sans-serif;
     }
-    
+
     body {
-        background-color: #131835;
+        background-color: rgb(255, 255, 255);
         min-height: 100vh;
     }
-    .content{
+
+    .bg {
+        position: relative;
+        /* เปลี่ยนเป็น relative เพื่อให้อยู่ใน col-6 */
+        width: 100%;
+        height: 100vh;
+        /* ให้เต็มจอ */
+        background: url('../images/bgWarehouse.png') center/cover no-repeat;
+    }
+
+    .bg::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(19, 24, 53, 0.7);
+        /* ความจางของพื้นหลัง */
+    }
+
+    .content {
+        position: relative;
+        /* เพื่อให้เนื้อหาอยู่ด้านบน */
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
+        height: 100%;
+        z-index: 1;
+        /* ทำให้รูปอยู่ด้านบน */
+    }
 
+
+
+    .banner {
+        background-color: #131835;
     }
 
     .card {
-        height:50%;
+        height: 50%;
         width: 50%;
         border-radius: 20px;
     }
@@ -42,30 +72,59 @@
     .container {
         margin-top: 250px;
     }
+
+    .login {
+        width: 60%;
+        margin-bottom: 100px;
+    }
+
     .button {
-        background-color:rgb(118, 135, 224);
+        background-color: rgb(118, 135, 224);
         color: white;
         border: none;
         border-radius: 10px;
         padding: 10px;
-        transition: ease-in-out 0.3s all; 
+        transition: ease-in-out 0.3s all;
     }
+
     .button:hover {
-        background-color:rgb(42, 47, 86);
+        background-color: rgb(42, 47, 86);
         transform: scale(1.05);
     }
 </style>
 
 <body>
     <script src="https://accounts.google.com/gsi/client" async></script>
-    <div class="content">
-            <div class="card ms-5 shadow">
-                <div class="card-body mx-5 ">
-                    <h3 class="text-center mt-5">Login</h3>
-                    <input type="email" class="form-control my-4" placeholder="Email" id="email">
-                    <input type="password" class="form-control my-4" placeholder="password" id="password">
+
+    <div class="row ">
+        <div class="col-6">
+            <h4 class="ms-3 my-2 ">รัศมีอิเล็กทริกส์</h4>
+            <div class="content justify-content-center">
+                <div class="login">
+                    <h3 class="text-start mt-5" style="font-weight: 1000;">Welcome</h3>
+                    <p>ระบบสินค้าคงคลัง ร้านรัศมีอิเล็กทริกส์</p>
+                    <label for="" class="mt-2">Email</label>
+                    <input type="email" class="form-control " placeholder="Email" id="email">
+                    <label for="" class="mt-4">Password</label>
+                    <input type="password" class="form-control mb-4" placeholder="password" id="password">
                     <button class="button form-control " onclick=login()>Login</button>
-                    <!-- <div class="d-flex justify-content-center mt-3">
+                </div>
+
+            </div>
+        </div>
+        <div class="col-6 banner px-0 py-0">
+            <div class="bg">
+                <div class="content">
+                    <img src="../images/warehouse.png" class="mt-5" style="width: 90%;" alt="">
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <!-- <div class="d-flex justify-content-center mt-3">
                         <div id="g_id_onload"
                             data-client_id="90310662516-8bc5o6v9casg97imrd8aoi99pnmbvutm.apps.googleusercontent.com"
                             data-context="signin"
@@ -83,11 +142,6 @@
                             data-locale="en-GB">
                         </div>
                     </div> -->
-                </div>
-            </div>
-    </div>
-
-
     <script>
         function decodeJwtResponse(token) {
             var base64Payload = token.split(".")[1];

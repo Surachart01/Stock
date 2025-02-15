@@ -174,7 +174,9 @@ if ($page == "Product") {
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <p class="me-auto my-auto">รายการสินค้าที่มีอยู่</p>
-                        <button class="btn btn-warning" id="productIn">เพิ่มสินค้า</button>
+                        <?php if ($user->status == 5) { ?>
+                            <button class="btn btn-warning" id="productIn">เพิ่มสินค้า</button>
+                        <?php } ?>
                     </div>
                 </div>
                 <div class="card-body">
@@ -186,7 +188,7 @@ if ($page == "Product") {
                                     <th scope="col">ชื่อสินค้า</th>
                                     <th scope="col">ราคาสินค้า</th>
                                     <th scope="col"></th>
-                                    <th scope="col"></th>
+
                                 </tr>
                             </thead>
                             <tbody id="contentTable">
@@ -203,10 +205,13 @@ if ($page == "Product") {
                                         <td>
                                             <?php echo $data->price ?>
                                         </td>
-                                        <td><button class="btn btn-warning" data-id="<?php echo $data->id ?>"
-                                                id="productEdit">แก้ไข</button></td>
-                                        <td><button class="btn btn-danger" data-id="<?php echo $data->id ?>"
-                                                id="productDel">ลบ</button></td>
+                                        <td><?php if ($user->status == 5) { ?>
+                                                <button class="btn btn-warning" data-id="<?php echo $data->id ?>"
+                                                    id="productEdit">แก้ไข</button>
+                                                <button class="btn btn-danger" data-id="<?php echo $data->id ?>"
+                                                    id="productDel">ลบ</button>
+                                            <?php } ?>
+                                        </td>
                                     </tr>
                                 <?php
 
@@ -415,6 +420,18 @@ if ($page == "InUp") {
             <div class="container">
                 <div class="card mt-4">
                     <div class="card-body">
+                        <?php if ($user->status == 9) { ?>
+                            <select name="" id="companyId" class="form-select form-select-lg my-2">
+                                <?php
+                                $sqlCompany = "SELECT * FROM company";
+                                $qCompany = $conn->query($sqlCompany);
+                                while ($dataCompany = $qCompany->fetch_object()) { ?>
+                                    <option <?php ($user->companyId == $dataCompany->companyId)?'selected':'' ?> value="<?php echo $dataCompany->companyId; ?>">
+                                        <?php echo $dataCompany->companyName; ?>
+                                    </option>
+                                <?php  } ?>
+                            </select>
+                        <?php } ?>
                         <table class="table" id="tableInUp">
                             <thead>
                                 <th scope="col">#</th>
@@ -422,7 +439,7 @@ if ($page == "InUp") {
                                 <th scope="col">ราคา</th>
                                 <th scope="col">จำนวนสินค้า</th>
                                 <th scope="col"></th>
-                                <th scope="col"></th>
+
                             </thead>
                             <tbody id="contentTable">
                                 <?php
@@ -454,11 +471,17 @@ if ($page == "InUp") {
                                         <td>
                                             <?php echo $totalQty; ?>
                                         </td>
+                                        <td>
+                                            <?php if ($user->status == 5) { ?>
+                                                <button class="btn btn-success" id="AddInUp" data-id="<?php echo $stockId ?>"
+                                                    data-productid="<?php echo $data->id; ?>">เพิ่ม</button>
+                                            <?php } ?>
+                                            <?php if ($user->status == 5 || $user->status == 1) { ?>
+                                                <button class="btn btn-danger" id="DownInUp" data-id="<?php echo $stockId ?>"
+                                                    data-productid="<?php echo $data->id; ?>">ขาย</button>
+                                            <?php } ?>
+                                        </td>
 
-                                        <td><button class="btn btn-success" id="AddInUp" data-id="<?php echo $stockId ?>"
-                                                data-productid="<?php echo $data->id; ?>">เพิ่ม</button></td>
-                                        <td><button class="btn btn-danger" id="DownInUp" data-id="<?php echo $stockId ?>"
-                                                data-productid="<?php echo $data->id; ?>">ลด</button></td>
 
                                     </tr>
                                 <?php
@@ -477,6 +500,23 @@ if ($page == "InUp") {
         $(document).ready(function() {
             let table = new DataTable('#tableInUp');
 
+        })
+
+        $(document).on("input","#companyId",function(){
+            var companyId = $(this).val();
+            var formData = new FormData();
+            formData.append("companyId",companyId);
+            $.ajax({
+                url:"./inupComponent.php",
+                type:"POST",
+                data:formData,
+                dataType:"html",
+                contentType:false,
+                processData:false,
+                success:function(res){
+                    $('#tableInUp').html(res)
+                }
+            })
         })
         $(document).on("input", "#search", function() {
             var like = $(this).val();
@@ -775,7 +815,6 @@ if ($page == "LogCompany") { ?>
             } else {
                 var companyId = $('#companyId').val();
             }
-            console.log(companyId);
             var year = $('#checkCompanyY').val();
             var month = $('#checkCompanyM').val();
             var formdata = new FormData();

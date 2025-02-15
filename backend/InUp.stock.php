@@ -10,12 +10,12 @@
     $stockId = $_POST['stockId'];
     $date = date("Y-m-d");
     $time = date("H:i:s");
-    if($stockId=="non"){
+    if($stockId=="non" && $option == "up"){
         $sqlIn = "INSERT INTO stock (productId,qty,companyId) VALUES ('$productId','$qty','$companyId')";
         $qIn = $conn->query($sqlIn);
         if($qIn){
             $primaryStock = mysqli_insert_id($conn);
-            $sqllog = "INSERT INTO log (stockId,productId,userId,companyId,date,time,qty,status) VALUES ('$primaryStock','$productId','$user->memId','$companyId','$date','$time','$qty','$option')";
+            $sqllog = "INSERT INTO log (stockId,productId,userId,companyId,date,time,qty,status,stockTotal) VALUES ('$primaryStock','$productId','$user->memId','$companyId','$date','$time','$qty','$option','$qty')";
             $qlog = $conn->query($sqllog);
             if($qlog){
                 echo json_encode("1");
@@ -43,7 +43,7 @@
         $sqlUp = "UPDATE stock SET qty='$total' WHERE id='$stockId'";
         $qInUp = $conn->query($sqlUp);
         if($qInUp){
-            $sqllog = "INSERT INTO log (stockId,productId,userId,companyId,date,time,qty,status) VALUES ('$stockId','$productId','$user->memId','$companyId','$date','$time','$qty','$option')";
+            $sqllog = "INSERT INTO log (stockId,productId,userId,companyId,date,time,qty,status,stockTotal) VALUES ('$stockId','$productId','$user->memId','$companyId','$date','$time','$qty','$option','$total')";
             $qlog = $conn->query($sqllog);
             if($qlog){
                 echo json_encode("1");
