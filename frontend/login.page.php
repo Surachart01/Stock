@@ -98,7 +98,7 @@
 
     <div class="row ">
         <div class="col-6">
-            <h4 class="ms-3 my-2 ">รัศมีอิเล็กทริกส์</h4>
+            <h4 class="ms-3 my-2 ">ระบบคลังสินค้าอุปกรณ์อิเล็กทรอนิกส์ ออนไลน์</h4>
             <div class="content justify-content-center">
                 <div class="login">
                     <h3 class="text-start mt-5" style="font-weight: 1000;">Welcome</h3>
