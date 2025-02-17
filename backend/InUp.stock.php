@@ -37,7 +37,7 @@
             $total = $dQty-$qty;
         }
         if($total<0){
-            echo json_encode("0");
+            echo json_encode("2");
             exit();
         }
         $sqlUp = "UPDATE stock SET qty='$total' WHERE id='$stockId'";

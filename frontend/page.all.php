@@ -364,7 +364,7 @@ if ($page == "Product") {
                 success: function(data) {
                     if (data == 1) {
                         Swal.fire({
-                            position: "top-end",
+                            
                             icon: "success",
                             title: "เสร็จสิ้น",
                             showConfirmButton: false,
@@ -374,7 +374,7 @@ if ($page == "Product") {
                         });
                     } else {
                         Swal.fire({
-                            position: "top-end",
+                            
                             icon: "error",
                             title: "เกิดข้อผิดพลาด",
                             showConfirmButton: false,
@@ -405,7 +405,7 @@ if ($page == "Product") {
                 success: function(data) {
                     if (data == 1) {
                         Swal.fire({
-                            position: "top-end",
+                            
                             icon: "success",
                             title: "เสร็จสิ้น",
                             showConfirmButton: false,
@@ -415,7 +415,7 @@ if ($page == "Product") {
                         });
                     } else {
                         Swal.fire({
-                            position: "top-end",
+                            
                             icon: "error",
                             title: "เกิดข้อผิดพลาด",
                             showConfirmButton: false,
@@ -619,7 +619,7 @@ if ($page == "InUp") {
                     console.log(data);
                     if (data == 1) {
                         Swal.fire({
-                            position: "top-end",
+                            
                             title: "เสร็จสิ้น",
                             icon: "success",
                             timer: 800,
@@ -627,9 +627,17 @@ if ($page == "InUp") {
                         }).then((result) => {
                             window.location.reload();
                         });
-                    } else {
+                    } else if(data == 2){
                         Swal.fire({
-                            position: "top-end",
+                            
+                            icon: "error",
+                            title: "ขายสินค้ามากกว่าสินค้าในสต๊อก",
+                            timer: 900,
+                            showConfirmButton: false
+                        });
+                    }else {
+                        Swal.fire({
+                            
                             icon: "error",
                             title: "เกิดข้อผิดพลาด",
                             timer: 900,
@@ -704,7 +712,7 @@ if ($page == "user") { ?>
                     success: function(data) {
                         if (data == "1") {
                             Swal.fire({
-                                position: "top-end",
+                                
                                 icon: "success",
                                 title: "เสร็จสิ้น",
                                 timer: 900,
@@ -714,7 +722,7 @@ if ($page == "user") { ?>
                             });
                         } else {
                             Swal.fire({
-                                position: "top-end",
+                                
                                 icon: "error",
                                 title: "เกิดข้อผิดพลาด",
                                 timer: 900,
@@ -725,7 +733,7 @@ if ($page == "user") { ?>
                 })
             } else {
                 Swal.fire({
-                    position: "top-end",
+                    
                     icon: "error",
                     title: "เกิดข้อผิดพลาด",
                     text: "password ไม่ตรงกัน",
@@ -1004,7 +1012,7 @@ if ($page == "Company") { ?>
                         success: function(data) {
                             if (data == 1) {
                                 Swal.fire({
-                                    position: "top-end",
+                                    
                                     title: "แก้ไขเสร็จสิ้น",
                                     icon: "success",
                                     showConfirmButton: false,
@@ -1014,7 +1022,7 @@ if ($page == "Company") { ?>
                                 });
                             } else {
                                 Swal.fire({
-                                    position: "top-end",
+                                    
                                     title: "เกิดข้อผิดพลาด",
                                     icon: "error",
                                     showConfirmButton: false,
@@ -1048,7 +1056,7 @@ if ($page == "Company") { ?>
                         success: function(data) {
                             if (data == 1) {
                                 Swal.fire({
-                                    position: "top-end",
+                                    
                                     title: "เสร็จสิ้น",
                                     icon: "success",
                                     showConfirmButton: false,
@@ -1058,7 +1066,7 @@ if ($page == "Company") { ?>
                                 });
                             } else {
                                 Swal.fire({
-                                    position: "top-end",
+                                    
                                     title: "เกิดข้อผิดพลาด",
                                     icon: "error",
                                     showConfirmButton: false,
