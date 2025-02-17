@@ -30,7 +30,9 @@ $sDate = $date . "%";
                     <th scope="col">พนักงาน</th>
                     <th scope="col">สถานะ</th>
                     <th scope="col">จำนวน</th>
-                    <th scope="col">จำนวนสินค้าคงเหลือ</th>
+                    <th scope="col">สินค้าคงเหลือ</th>
+                    <th scope="col">ราคารวม</th>
+                    <th scope="col">สาขา</th>
                     
                 </tr>
             </thead>
@@ -49,6 +51,9 @@ while ($data = $qSel->fetch_object()) {
     $sqlUser = "SELECT * FROM member WHERE memId = '$data->userId'";
     $qUser = $conn->query($sqlUser);
     $dataUser = $qUser->fetch_object();
+    $sqlCompany = "SELECT * FROM company WHERE companyId = '$data->companyId'";
+    $qCompany = $conn->query($sqlCompany);
+    $dataCompany = $qCompany->fetch_object();
 ?>
 
     <tr>
@@ -69,6 +74,8 @@ while ($data = $qSel->fetch_object()) {
         </td>
         <td><?php echo $data->qty; ?> ชิ้น</td>
         <td><?php echo $data->stockTotal; ?> ชิ้น</td>
+        <td><?= $dataPro->price * $data->qty ?></td>
+        <td><?= $dataCompany->companyName ?></td>
         
         
     </tr>

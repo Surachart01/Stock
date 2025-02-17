@@ -165,8 +165,7 @@ if ($page == "home") {
     </div>
 <?php }
 if ($page == "Product") {
-    $stept = 1;
-    $sqlPro = "SELECT * FROM product LIMIT 25";
+    $sqlPro = "SELECT * FROM product WHERE companyId = '$user->companyId'";
     $qPro = $conn->query($sqlPro); ?>
     <div class="row">
         <div class="col-12">
@@ -180,6 +179,18 @@ if ($page == "Product") {
                     </div>
                 </div>
                 <div class="card-body">
+                    <?php if ($user->status == 9) { ?>
+                        <select name="" id="companyId" class="form-select form-select-lg my-2">
+                            <?php
+                            $sqlCompany = "SELECT * FROM company";
+                            $qCompany = $conn->query($sqlCompany);
+                            while ($dataCompany = $qCompany->fetch_object()) { ?>
+                                <option <?php ($user->companyId == $dataCompany->companyId) ? 'selected' : '' ?> value="<?php echo $dataCompany->companyId; ?>">
+                                    <?php echo $dataCompany->companyName; ?>
+                                </option>
+                            <?php  } ?>
+                        </select>
+                    <?php } ?>
                     <div class="table-responsive">
                         <table class="table" id="tableProduct">
                             <thead>
@@ -232,6 +243,27 @@ if ($page == "Product") {
     <script>
         $(document).ready(function() {
             let table = new DataTable('#tableProduct');
+        })
+
+        $(document).on("input", "#companyId", function() {
+            try {
+                let companyId = $(this).val()
+                let formData = new FormData()
+                formData.append("companyId", companyId);
+                $.ajax({
+                    url: "./tableProduct.php",
+                    type: "POST",
+                    data: formData,
+                    dataType: "html",
+                    contentType: false,
+                    processData: false,
+                    success: function(res) {
+                        $('#tableProduct').html(res);
+                    }
+                })
+            } catch (error) {
+
+            }
 
         })
 
@@ -413,7 +445,7 @@ if ($page == "Product") {
     </script>
 <?php }
 if ($page == "InUp") {
-    $sqlPro = "SELECT * FROM product";
+    $sqlPro = "SELECT * FROM product WHERE companyId = '$user->companyId'";
     $qPro = $conn->query($sqlPro); ?>
     <div class="row">
         <div class="col-12">
@@ -426,7 +458,7 @@ if ($page == "InUp") {
                                 $sqlCompany = "SELECT * FROM company";
                                 $qCompany = $conn->query($sqlCompany);
                                 while ($dataCompany = $qCompany->fetch_object()) { ?>
-                                    <option <?php ($user->companyId == $dataCompany->companyId)?'selected':'' ?> value="<?php echo $dataCompany->companyId; ?>">
+                                    <option <?php ($user->companyId == $dataCompany->companyId) ? 'selected' : '' ?> value="<?php echo $dataCompany->companyId; ?>">
                                         <?php echo $dataCompany->companyName; ?>
                                     </option>
                                 <?php  } ?>
@@ -502,18 +534,18 @@ if ($page == "InUp") {
 
         })
 
-        $(document).on("input","#companyId",function(){
+        $(document).on("input", "#companyId", function() {
             var companyId = $(this).val();
             var formData = new FormData();
-            formData.append("companyId",companyId);
+            formData.append("companyId", companyId);
             $.ajax({
-                url:"./inupComponent.php",
-                type:"POST",
-                data:formData,
-                dataType:"html",
-                contentType:false,
-                processData:false,
-                success:function(res){
+                url: "./inupComponent.php",
+                type: "POST",
+                data: formData,
+                dataType: "html",
+                contentType: false,
+                processData: false,
+                success: function(res) {
                     $('#tableInUp').html(res)
                 }
             })

@@ -4,7 +4,7 @@ session_start();
 $user = $_SESSION['User'];
 $companyId = $_POST['companyId'];
 
-$sqlPro = "SELECT * FROM product";
+$sqlPro = "SELECT * FROM product WHERE companyId = '$companyId'";
 $qPro = $conn->query($sqlPro);
 ?>
 
